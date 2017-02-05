@@ -1,0 +1,36 @@
+{
+  "name": "platform-manager",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-class-properties": "^6.22.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "eslint": "^3.15.0",
+    "eslint-config-esayemm": "^1.0.0",
+    "expect": "^1.20.2",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.22.0"
+  },
+  "scripts": {
+    "babel": "rm -rf lib && ./node_modules/babel-cli/bin/babel.js src --out-dir lib --copy-files",
+    "eslint": "./node_modules/eslint/bin/eslint.js .",
+    "test": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill $(find . -name '*.spec.js' ! -ipath '*node_modules*')",
+    "test:watch": "NODE_ENV=test ./node_modules/mocha/bin/mocha --compilers js:babel-register --require babel-polyfill --watch $(find . -name '*.spec.js' ! -ipath '*node_modules*')",
+    "preversion": "npm run eslint && npm run test",
+    "version": "npm run babel && git add .",
+    "postversion": "git push && git push --tags && npm publish"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "platform-manager": "./bin/index.js"
+  }
+}
